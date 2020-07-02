@@ -39,8 +39,11 @@ data "ibm_resource_group" "rg" {
   name = "${var.resource_group}"
 }
 
+# Generating random ID
+resource "random_uuid" "test_uuid" { }
+
 resource "ibm_resource_instance" "test-pdns-instance" {
-  name              = "test-pdns-instance"
+  name              = "${var.vpc_name}-${substr(random_uuid.test_uuid.result,0,8)}"
   resource_group_id = data.ibm_resource_group.rg.id
   location          = "global"
   service           = "dns-svcs"
