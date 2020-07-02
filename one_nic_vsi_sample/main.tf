@@ -38,3 +38,11 @@ data "ibm_is_zone" "zone" {
 data "ibm_resource_group" "rg" {
   name = "${var.resource_group}"
 }
+
+resource "ibm_resource_instance" "test-pdns-instance" {
+  name              = "test-pdns-instance"
+  resource_group_id = data.ibm_resource_group.rg.id
+  location          = "global"
+  service           = "dns-svcs"
+  plan              = "standard-dns"
+}
